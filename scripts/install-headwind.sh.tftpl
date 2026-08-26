@@ -1,0 +1,37 @@
+#!/bin/bash
+# User data EC2 - installe Docker et prepare l'hote pour Headwind MDM.
+# Le demarrage complet de la stack (docker compose up) est fait ensuite via
+# Session Manager avec scripts/deploy-headwind.sh (variables dynamiques :
+# IP publique connue seulement apres allocation de l'Elastic IP).
+set -eux
+
+apt-get update -y
+apt-get install -y ca-certificates curl gnupg git jq unzip lsb-release openssl snapd
+
+# Agent SSM (permet l'admin via Session Manager, sans SSH)
+snap install amazon-ssm-agent --classic || true
+systemctl enable --now snap.amazon-ssm-agent.amazon-ssm-agent.service || true
+
+# Docker Engine + Compose plugin
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
+. /etc/os-release
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $${VERSION_CODENAME} stable" \
+  > /etc/apt/sources.list.d/docker.list
+apt-get update -y
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+systemctl enable --now docker
+
+hostnamectl set-hostname secure-emm-headwind
+mkdir -p /opt/headwind-mdm/volumes/{db,work,letsencrypt,hmdm-config}
+
+cat >/opt/headwind-mdm/README.txt <<'TXT'
+Instance Headwind MDM.
+Admin_email prevu par Terraform : ${admin_email}
+Acces administrateur : AWS Systems Manager Session Manager uniquement.
+Ne pas ouvrir SSH/22.
+Etape suivante : executer scripts/deploy-headwind.sh depuis une session SSM
+pour generer .env et docker-compose.yaml avec l'IP publique reelle, puis
+lancer "docker compose up -d".
+TXT
