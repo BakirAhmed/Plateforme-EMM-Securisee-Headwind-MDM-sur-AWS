@@ -5,7 +5,7 @@
 [![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 [![Status](https://img.shields.io/badge/status-terminé-brightgreen)]()
 
-## 🎯 Objectif du projet
+## Objectif du projet
 
 Déployer et administrer une plateforme **EMM (Enterprise Mobility Management)** auto-hébergée
 ([Headwind MDM](https://h-mdm.com/)) sur AWS, pour gérer et sécuriser une flotte de terminaux
@@ -17,7 +17,7 @@ réponse à incident).
 > Android et doit pouvoir les inventorier, les configurer, les verrouiller ou les effacer en
 > cas de perte, tout en conservant des preuves d'administration exploitables.
 
-## 🏗️ Architecture
+## Architecture
 
 ![Architecture - Plateforme EMM Headwind MDM](docs/architecture-diagram.png)
 
@@ -78,7 +78,7 @@ flowchart LR
 | **GuardDuty + Security Hub** | Détection de menaces et centralisation des findings de sécurité |
 | **EventBridge + SNS** | Alerte automatique par e-mail à chaque finding GuardDuty |
 
-## 📁 Structure du dépôt
+## Structure du dépôt
 
 ```
 .
@@ -98,7 +98,7 @@ flowchart LR
 └── README.md
 ```
 
-## 🚀 Déploiement
+## Déploiement
 
 ### 1. Infrastructure AWS (Terraform)
 
@@ -139,7 +139,7 @@ docker compose restart hmdm
 2. Créer les configurations : `CFG-BASE-CORP` (usage standard), `CFG-KIOSK-DEMO` (mode terminal dédié), `CFG-QUARANTAINE` (appareil perdu/non conforme).
 3. Générer un QR code d'enrôlement pour `CFG-BASE-CORP` et enrôler un appareil Android (factory reset) ou documenter la simulation si aucun terminal n'est disponible.
 
-## 🧠 Points techniques abordés
+## Points techniques abordés
 
 - **Administration sans SSH** : accès exclusivement via AWS Systems Manager Session Manager (rôle IAM `AmazonSSMManagedInstanceCore`)
 - **Défense en profondeur réseau** : Security Group minimal (3 ports), VPC dédié, aucune exposition inutile
@@ -148,13 +148,13 @@ docker compose restart hmdm
 - **Gestion de flotte EMM** : configurations différenciées, conventions de nommage, conformité, cycle de vie applicatif
 - **Réponse à incident** : procédure structurée de mise en quarantaine d'un appareil perdu (voir `docs/runbook-incident.md`)
 
-## 📸 Preuves de déploiement
+## Preuves de déploiement
 
 *(À compléter : capture de l'instance EC2 avec rôle IAM, capture Security Hub / GuardDuty findings,
 capture de la console Headwind avec les 3 configurations, QR code d'enrôlement, capture du bucket
 S3 evidence chiffré.)*
 
-## 🔮 Améliorations futures (piste production)
+## Améliorations futures (piste production)
 
 - [ ] Remplacer l'EC2 publique + PostgreSQL conteneurisé par une architecture ALB + instance privée + RDS Multi-AZ
 - [ ] Terminaison TLS via ACM + ALB au lieu de Certbot local
@@ -162,7 +162,7 @@ S3 evidence chiffré.)*
 - [ ] Sauvegardes automatisées (snapshots EBS, réplication S3)
 - [ ] WAF ou AWS Verified Access en amont de la console MDM
 
-## 👤 Auteur
+## Auteur
 
 **Ahmed Bakir** — Étudiant Ingénieur Réseaux & Cloud (EPSI Lyon / ENIG)
 [LinkedIn](https://linkedin.com/in/ahmed-bk) · [GitHub](https://github.com/BakirAhmed)
