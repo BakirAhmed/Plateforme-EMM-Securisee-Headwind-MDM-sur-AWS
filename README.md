@@ -1,4 +1,4 @@
-# 📱 Plateforme EMM Sécurisée — Headwind MDM sur AWS
+# Plateforme EMM Sécurisée — Headwind MDM sur AWS
 
 [![Terraform](https://img.shields.io/badge/IaC-Terraform-844FBA?logo=terraform)](https://www.terraform.io/)
 [![AWS](https://img.shields.io/badge/Cloud-AWS-FF9900?logo=amazonaws)](https://aws.amazon.com/)
