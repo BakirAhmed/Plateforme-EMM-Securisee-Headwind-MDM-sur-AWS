@@ -148,11 +148,7 @@ docker compose restart hmdm
 - **Gestion de flotte EMM** : configurations différenciées, conventions de nommage, conformité, cycle de vie applicatif
 - **Réponse à incident** : procédure structurée de mise en quarantaine d'un appareil perdu (voir `docs/runbook-incident.md`)
 
-## Preuves de déploiement
 
-*(À compléter : capture de l'instance EC2 avec rôle IAM, capture Security Hub / GuardDuty findings,
-capture de la console Headwind avec les 3 configurations, QR code d'enrôlement, capture du bucket
-S3 evidence chiffré.)*
 
 ## Améliorations futures (piste production)
 
